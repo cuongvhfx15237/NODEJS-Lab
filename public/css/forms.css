@@ -1,0 +1,14 @@
+.form-control {
+    align-items: center;
+}
+folabel {
+    font-size: 1.3rem;
+    color: red;
+}
+input:hover {
+    color: yellowgreen;
+    width: 60%;
+}
+button:hover{
+    transform: scale(2);
+}

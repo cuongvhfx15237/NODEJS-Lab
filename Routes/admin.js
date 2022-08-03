@@ -10,7 +10,16 @@ const products = [];
 // /admin.add-product => get
 router.get('/add-product',(req, res, next)=>{
 
-    res.render('add-product', {pageTitle: 'Add Products', path: '/admin/add-producrt' });
+    res.render('add-product', 
+    {
+        pageTitle: 'Add Products', 
+        path: '/admin/add-producrt',
+        formCSS: true, 
+        product: true,
+        activeProduct: true,
+        productCSS: true,
+        activeAddProduct: true
+    });
     
 });
 
