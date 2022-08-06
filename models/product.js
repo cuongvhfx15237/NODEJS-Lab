@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const { stringify } = require('querystring');
 
 const p = path.join(
   path.dirname(process.mainModule.filename),
@@ -44,6 +45,17 @@ module.exports = class Product {
           console.log(err);
         });
       }
+    });
+  }
+
+  static deleteById(id) {
+    getProductsFromFile(products => {
+      const updatedProducts = products.filter(prod => prod.id === id);
+      fs.writeFile(p, stringify(updatedProducts), err =>{
+        if(!err) {
+          
+        }
+      })
     });
   }
 
