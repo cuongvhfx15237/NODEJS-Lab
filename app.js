@@ -6,14 +6,6 @@ const bodyParser = require('body-parser');
 const errorController = require('./controllers/error');
 const sequelize = require('./util/database');
 
-// sequelize.execute('SELECT * FROM products')
-// .then(result =>{
-//     console.log(result[0], result[1])
-// })
-// .catch(err => {
-//     console.log(err)
-// });
-
 const app = express();
 
 app.set('view engine', 'ejs');
@@ -30,11 +22,13 @@ app.use(shopRoutes);
 
 app.use(errorController.get404);
 
-sequelize.sync()
-.then(result => {
+sequelize
+  .sync()
+  .then(result => {
     // console.log(result);
+    console.log(' Created Product');
     app.listen(3000);
-})
-.catch(err => {
+  })
+  .catch(err => {
     console.log(err);
-})
+  });
