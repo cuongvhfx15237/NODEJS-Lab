@@ -33,7 +33,6 @@ module.exports = class Cart {
       }
       cart.totalPrice = cart.totalPrice + +productPrice;
       fs.writeFile(p, JSON.stringify(cart), err => {
-        console.log(err);
       });
     });
   }
@@ -53,9 +52,20 @@ module.exports = class Cart {
         updatedCart.totalPrice - productPrice * productQty;
 
       fs.writeFile(p, JSON.stringify(updatedCart), err => {
-        console.log(err);
       });
     });
+  }
+
+  static getProducts() {
+    fs.readFile(p, (err, fileContent) => {
+      const cart = JSON.parse(fileContent);
+      if (err) {
+        cb(null);
+      }
+      else {
+        cb(cart);
+      }
+    })
   }
 
   static getCart(cb) {
