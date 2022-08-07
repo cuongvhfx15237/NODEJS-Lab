@@ -11,22 +11,20 @@ exports.getProducts = (req, res, next) => {
     })
   })
   .catch(err => console.log(err));
-  res.render('shop/product-list', {
-    prods: products,
-    pageTitle: 'All Products',
-    path: '/products'
-  });
 };
 
 exports.getProduct = (req, res, next) => {
   const prodId = req.params.productId;
-  Product.findById(prodId, product => {
+  Product.findById(prodId)
+  .then(([product])=>{
+    console.log(product[0]);
     res.render('shop/product-detail', {
-      prods: product,
+      product: product[0],
       pageTitle: product.title,
       path: '/products'
     });
-  });
+  })
+  .catch(err => console.log(err))
 };
 
 exports.getIndex = (req, res, next) => {
