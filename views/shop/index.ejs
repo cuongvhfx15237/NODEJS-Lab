@@ -23,6 +23,7 @@
                         </div>
                         <div class="card__actions">
                         <!-- in loop, add-on put in all product, but not support, need add obj function product:product to create-->
+                            <a href="/products/<%= product._id %>" class="btn">Details</a>
                             <%- include('../includes/add-to-cart.ejs', {product: product}) %>
                         </div>
                     </article>
