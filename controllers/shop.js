@@ -5,7 +5,6 @@ const Order = require('../models/order');
 exports.getProducts = (req, res, next) => {
   Product.find()
     .then(products => {
-      console.log(products);
       res.render('shop/product-list', {
         prods: products,
         pageTitle: 'All Products',
@@ -45,7 +44,6 @@ exports.getIndex = (req, res, next) => {
 };
 
 exports.getCart = (req, res, next) => {
-  console.log(req)
   req.user
   .populate('cart.items.productId')
     .then(user => {
@@ -66,7 +64,6 @@ exports.postCart = (req, res, next) => {
     return req.user.addToCart(product);
   })
   .then(result => {
-    console.log(result)
     res.redirect('/cart')
   })
   .catch(err => console.log(err))
@@ -86,9 +83,10 @@ exports.postCartDeleteProduct = (req, res, next) => {
 exports.postOrder = (req, res, next) => {
   req.user.populate('cart.items.productId')
   .then(user => {
+    console.log(user.cart.items);
     const products = user.cart.items.map(i => {
       return {
-        quantity: i.quantity, product: i.productId
+        quantity: i.quantity, product: {...i.productId._doc}
       }
     })
     const order = new Order({
@@ -98,7 +96,6 @@ exports.postOrder = (req, res, next) => {
       },
       products: products
     })
-    console.log(order)
    return order.save();
   })
     .then(result => {
