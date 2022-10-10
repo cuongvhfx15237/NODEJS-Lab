@@ -1,6 +1,5 @@
 const path = require('path');
 
-
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
@@ -15,16 +14,14 @@ app.set('views', 'views');
 
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
-const authRoutes = require('./routes/auth');
-
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use((req, res, next) => {
-  User.findById("62f72b359a0975d5082d921e")
+  User.findById('5bab316ce0a7c75f783cb8a8')
     .then(user => {
-      req.user = user ;
+      req.user = user;
       next();
     })
     .catch(err => console.log(err));
@@ -32,29 +29,28 @@ app.use((req, res, next) => {
 
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
-app.use(authRoutes); // to controll reouter get login in router
 
 app.use(errorController.get404);
 
 mongoose
-.connect('mongodb+srv://cuongvhfx15237:adminitration@cuongvhfx15237.k0pn0dz.mongodb.net/shop?retryWrites=true&w=majority')
-.then( result => {
-  User.findOne()
-  .then(user =>{
-    if (!user) {
-      const user = new User({
-        name: 'Cuong',
-        email: 'cuongvhfx@funix.edu.vn',
-        cart: {
-          items: []
-        }
-      })
-      user.save();
-    }
+  .connect(
+    'mongodb+srv://maximilian:9u4biljMQc4jjqbe@cluster0-ntrwp.mongodb.net/shop?retryWrites=true'
+  )
+  .then(result => {
+    User.findOne().then(user => {
+      if (!user) {
+        const user = new User({
+          name: 'Max',
+          email: 'max@test.com',
+          cart: {
+            items: []
+          }
+        });
+        user.save();
+      }
+    });
+    app.listen(3000);
   })
-  console.log('Connect: !!!!')
-  app.listen(3000);
-})
-.catch(err => {
-  console.log(err);
-})
+  .catch(err => {
+    console.log(err);
+  });
